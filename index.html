@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Анатолий и Олеся · 01.06.2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Montserrat:wght@300;400&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --green-dark:#4a5e3a;--green-mid:#6b7f55;--green-light:#a8b897;
+  --green-pale:#e8ede0;--green-pp:#f4f7ef;
+  --gold:#c8a84b;--white:#fefefe;--dark:#1e2118;--mid:#5a5e52;
+  --border:rgba(106,127,85,.2);
+}
+
+body{min-height:100vh;background:var(--white);font-family:'Montserrat',sans-serif;
+  color:var(--dark);display:flex;flex-direction:column;align-items:center;
+  padding:0 20px 60px;position:relative;overflow-x:hidden;}
+
+body::before{content:'';position:fixed;top:-20px;left:-40px;width:280px;height:280px;
+  pointer-events:none;z-index:0;opacity:.65;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Cellipse cx='80' cy='80' rx='38' ry='22' fill='%23a8b897' opacity='.5' transform='rotate(-30 80 80)'/%3E%3Cellipse cx='140' cy='50' rx='28' ry='16' fill='%236b7f55' opacity='.4' transform='rotate(-10 140 50)'/%3E%3Cellipse cx='50' cy='150' rx='44' ry='26' fill='%23a8b897' opacity='.45' transform='rotate(-50 50 150)'/%3E%3Cpath d='M20,20 Q80,60 150,30' stroke='%236b7f55' stroke-width='1.5' fill='none' opacity='.4'/%3E%3Ccircle cx='170' cy='40' r='5' fill='%23a8b897' opacity='.5'/%3E%3C/svg%3E") no-repeat;background-size:contain;}
+
+body::after{content:'';position:fixed;bottom:-20px;right:-40px;width:280px;height:280px;
+  pointer-events:none;z-index:0;opacity:.65;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Cellipse cx='220' cy='220' rx='44' ry='26' fill='%23a8b897' opacity='.5' transform='rotate(30 220 220)'/%3E%3Cellipse cx='160' cy='250' rx='32' ry='18' fill='%236b7f55' opacity='.4' transform='rotate(10 160 250)'/%3E%3Cellipse cx='250' cy='160' rx='38' ry='22' fill='%23a8b897' opacity='.45' transform='rotate(50 250 160)'/%3E%3Cpath d='M280,280 Q220,240 150,270' stroke='%236b7f55' stroke-width='1.5' fill='none' opacity='.4'/%3E%3Ccircle cx='130' cy='260' r='5' fill='%23a8b897' opacity='.5'/%3E%3C/svg%3E") no-repeat;background-size:contain;}
+
+.hearts-bg{position:fixed;inset:0;pointer-events:none;z-index:0}
+.heart{position:absolute;color:var(--gold);font-size:10px;opacity:.4}
+
+.content{position:relative;z-index:1;width:100%;display:flex;flex-direction:column;align-items:center;}
+
+.monogram-wrap{margin-top:36px;width:160px;height:130px;display:flex;align-items:center;justify-content:center;}
+.monogram{font-family:'Cormorant Garamond',serif;font-weight:600;font-style:italic;
+  font-size:96px;line-height:1;letter-spacing:-8px;color:var(--dark);user-select:none;}
+.monogram .first{font-size:80px;vertical-align:top;margin-top:6px}
+
+.heart-divider{display:flex;align-items:center;gap:10px;margin:14px 0 8px;}
+.heart-divider::before{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--green-light));}
+.heart-divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--green-light),transparent);}
+.heart-divider .hico{color:var(--dark);font-size:13px}
+
+.names{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(30px,7vw,46px);
+  font-weight:400;color:var(--dark);text-align:center;}
+.date-str{font-weight:300;font-size:13px;letter-spacing:.35em;color:var(--mid);margin-top:8px;text-align:center;}
+
+.guest-block{margin:22px 0 24px;text-align:center;}
+.guest-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:24px;color:var(--green-mid);min-height:30px;}
+.guest-sub{font-size:11px;color:var(--mid);letter-spacing:.1em;margin-top:3px;}
+
+.card{background:rgba(255,255,255,.95);border:1px solid var(--border);border-radius:20px;
+  width:100%;max-width:520px;padding:32px 28px 28px;
+  box-shadow:0 8px 48px rgba(74,94,58,.08),0 2px 8px rgba(74,94,58,.04);}
+
+.drop{border:1.5px dashed var(--green-light);border-radius:14px;background:var(--green-pp);
+  padding:36px 16px;text-align:center;cursor:pointer;transition:.2s;position:relative;}
+.drop:hover,.drop.over{border-color:var(--green-mid);background:var(--green-pale)}
+.drop input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.drop-ico{font-size:32px;margin-bottom:10px;opacity:.6}
+.drop-t{font-size:14px;font-weight:400;margin-bottom:4px;color:var(--dark)}
+.drop-s{font-size:11px;color:var(--mid);letter-spacing:.04em}
+
+.flist{margin:14px 0 0;display:flex;flex-direction:column;gap:6px}
+.fitem{display:flex;align-items:center;gap:8px;padding:8px 12px;
+  background:var(--green-pp);border:1px solid var(--border);border-radius:10px;font-size:12px;}
+.fitem .ico{font-size:16px;flex-shrink:0}
+.fitem .nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--dark)}
+.fitem .sz{color:var(--mid);font-size:11px;flex-shrink:0}
+.fitem .st{flex-shrink:0;font-size:11px;color:var(--green-mid);min-width:38px;text-align:right;}
+.fitem .rm{background:none;border:none;cursor:pointer;color:var(--green-light);font-size:14px;padding:0 2px;flex-shrink:0;transition:.15s}
+.fitem .rm:hover{color:#b54040}
+
+.prog{margin-top:12px;display:none}
+.prog-lbl{font-size:11px;color:var(--mid);margin-bottom:4px;}
+.prog-wrap{height:4px;background:var(--border);border-radius:3px;overflow:hidden}
+.prog-bar{height:100%;background:var(--green-mid);width:0%;transition:width .3s}
+
+.msg{margin-top:14px;padding:12px 16px;border-radius:10px;font-size:13px;text-align:center;display:none;line-height:1.5}
+.msg.ok{background:#EBF2E5;color:#2e5c1e;border:1px solid #b6d4a0;display:block}
+.msg.err{background:#FEF0F0;color:#9b2020;border:1px solid #f0b8b8;display:block}
+.msg.ld{background:var(--green-pp);color:var(--mid);border:1px solid var(--border);display:block}
+
+.acts{margin-top:22px;display:flex;flex-direction:column;gap:10px}
+.btn-p{width:100%;padding:15px;background:var(--green-dark);color:#fff;border:none;border-radius:12px;
+  font-family:'Montserrat',sans-serif;font-size:12px;letter-spacing:.18em;
+  text-transform:uppercase;cursor:pointer;transition:.2s;}
+.btn-p:hover{background:var(--green-mid)}
+.btn-p:disabled{background:var(--green-pale);color:var(--green-light);cursor:not-allowed}
+
+.warn{background:#FFFBEA;border:1px solid #E8D9A0;border-radius:10px;
+  padding:12px 16px;font-size:12px;color:#7A6010;margin-bottom:18px;text-align:center;}
+
+.fnote{margin-top:24px;font-size:10px;color:var(--mid);text-align:center;
+  letter-spacing:.07em;opacity:.65;position:relative;z-index:1}
+
+@media(max-width:420px){.card{padding:22px 16px 20px}.monogram{font-size:80px}}
+</style>
+</head>
+<body>
+
+<div class="hearts-bg" aria-hidden="true">
+  <span class="heart" style="top:8%;left:5%">♥</span>
+  <span class="heart" style="top:5%;left:88%">♥</span>
+  <span class="heart" style="top:22%;left:93%">♥</span>
+  <span class="heart" style="top:38%;left:3%">♥</span>
+  <span class="heart" style="top:55%;left:96%">♥</span>
+  <span class="heart" style="top:70%;left:6%">♥</span>
+  <span class="heart" style="top:82%;left:90%">♥</span>
+  <span class="heart" style="top:92%;left:15%">♥</span>
+  <span class="heart" style="top:15%;left:50%">♥</span>
+</div>
+
+<div class="content">
+  <div class="monogram-wrap">
+    <span class="monogram"><span class="first">А</span>О</span>
+  </div>
+  <div class="heart-divider"><span class="hico">♡</span></div>
+  <p class="names">Анатолий и Олеся</p>
+  <p class="date-str">01 · 06 · 2026</p>
+
+  <div class="guest-block">
+    <div class="guest-name" id="gname"></div>
+    <div class="guest-sub"  id="gsub"></div>
+  </div>
+
+  <div class="card">
+    <div id="warn" class="warn" style="display:none">
+      ⚠ Имя гостя не определено. Отсканируйте QR-код со своей метки.
+    </div>
+
+    <div class="drop" id="drop">
+      <input type="file" id="fi" multiple accept="image/*,video/*">
+      <div class="drop-ico">📷</div>
+      <div class="drop-t">Нажмите или перетащите фото и видео</div>
+      <div class="drop-s">Любое количество · Без ограничений по размеру</div>
+    </div>
+
+    <div class="flist" id="flist"></div>
+
+    <div class="prog" id="prog">
+      <div class="prog-lbl" id="plbl">Загрузка...</div>
+      <div class="prog-wrap"><div class="prog-bar" id="pbar"></div></div>
+    </div>
+
+    <div class="msg" id="msg"></div>
+
+    <div class="acts">
+      <button class="btn-p" id="upBtn" onclick="startUpload()">Загрузить фото / видео</button>
+    </div>
+  </div>
+
+  <p class="fnote">Ваши фото сохраняются в свадебный альбом · Спасибо, что делитесь моментами ♡</p>
+</div>
+
+<script>
+// ╔══════════════════════════════════════════════════════════╗
+// ║  ВСТАВЬТЕ СВОЙ ТОКЕН СЮДА (получить на oauth.yandex.ru) ║
+// ╚══════════════════════════════════════════════════════════╝
+const YADISK_TOKEN = 'ВСТАВЬТЕ_ТОКЕН_СЮДА';
+
+// Корневая папка на Яндекс.Диске (будет создана автоматически)
+const ROOT_DIR = 'disk:/Свадьба Олеси и Толи';
+
+// Размер чанка для загрузки (10 МБ — Яндекс.Диск поддерживает до 1 ГБ за раз,
+// но чанки нужны для прогресса и надёжности)
+const CHUNK_SIZE = 10 * 1024 * 1024;
+
+// Параллельность для фото
+const PARALLEL = 3;
+
+// ── Имя гостя из URL ──────────────────────────────────────
+const params    = new URLSearchParams(window.location.search);
+const guestName = (params.get('guest') || params.get('name') || '').trim();
+
+const gnameEl = document.getElementById('gname');
+const gsubEl  = document.getElementById('gsub');
+if (guestName) {
+  gnameEl.textContent = guestName;
+  gsubEl.textContent  = 'Ваши файлы сохранятся в папку «' + guestName + '»';
+} else {
+  document.getElementById('warn').style.display = 'block';
+}
+
+// ── Файлы ────────────────────────────────────────────────
+let files    = [];
+let uploading = false;
+const drop   = document.getElementById('drop');
+const fi     = document.getElementById('fi');
+const flist  = document.getElementById('flist');
+
+fi.addEventListener('change', () => add(fi.files));
+drop.addEventListener('dragover',  e => { e.preventDefault(); drop.classList.add('over'); });
+drop.addEventListener('dragleave', ()  => drop.classList.remove('over'));
+drop.addEventListener('drop',      e  => { e.preventDefault(); drop.classList.remove('over'); add(e.dataTransfer.files); });
+
+function add(list) {
+  for (const f of list)
+    if (!files.find(x => x.name === f.name && x.size === f.size)) files.push(f);
+  render();
+}
+function rm(i) { if (!uploading) { files.splice(i, 1); render(); } }
+function render() {
+  flist.innerHTML = '';
+  files.forEach((f, i) => {
+    const d = document.createElement('div');
+    d.className = 'fitem';
+    d.innerHTML =
+      '<span class="ico">'+(f.type.startsWith('video')?'🎬':'🖼️')+'</span>' +
+      '<span class="nm">'+esc(f.name)+'</span>' +
+      '<span class="sz">'+fmt(f.size)+'</span>' +
+      '<span class="st" id="st'+i+'"></span>' +
+      '<button class="rm" onclick="rm('+i+')">✕</button>';
+    flist.appendChild(d);
+  });
+}
+
+function fmt(b){ return b<1048576?Math.round(b/1024)+' KB':(b/1048576).toFixed(1)+' MB'; }
+function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+function status(t,c){ const e=document.getElementById('msg'); e.textContent=t; e.className='msg '+c; }
+function setSt(i,t){ const e=document.getElementById('st'+i); if(e) e.textContent=t; }
+
+// ── Прогресс ─────────────────────────────────────────────
+const progress = {};
+function updateProgress(total) {
+  const sum = Object.values(progress).reduce((a,b) => a+b, 0);
+  document.getElementById('pbar').style.width = Math.round(sum/total*100)+'%';
+}
+
+// ── Яндекс.Диск API ──────────────────────────────────────
+const YD = 'https://cloud-api.yandex.net/v1/disk';
+
+async function ydRequest(path, opts={}) {
+  const resp = await fetch(YD + path, {
+    ...opts,
+    headers: {
+      'Authorization': 'OAuth ' + YADISK_TOKEN,
+      ...(opts.headers || {})
+    }
+  });
+  return resp;
+}
+
+// Создать папку (игнорируем 409 — уже существует)
+async function mkDir(path) {
+  const resp = await ydRequest('/resources?path=' + encodeURIComponent(path), { method: 'PUT' });
+  if (resp.status !== 201 && resp.status !== 409) {
+    throw new Error('Не удалось создать папку: HTTP ' + resp.status);
+  }
+}
+
+// Получить URL для загрузки файла
+async function getUploadUrl(path, overwrite=true) {
+  const resp = await ydRequest(
+    '/resources/upload?path=' + encodeURIComponent(path) + '&overwrite=' + overwrite
+  );
+  if (!resp.ok) {
+    const err = await resp.json().catch(() => ({}));
+    throw new Error(err.message || 'HTTP ' + resp.status);
+  }
+  const data = await resp.json();
+  return data.href;
+}
+
+// Загрузить файл напрямую по URL (Яндекс.Диск даёт прямой PUT URL)
+async function uploadToYandex(file, ydPath, fileIdx, totalFiles) {
+  // Яндекс.Диск не поддерживает resumable upload через API v1,
+  // поэтому грузим файл целиком через XMLHttpRequest (для прогресса)
+  const uploadUrl = await getUploadUrl(ydPath);
+
+  await new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('PUT', uploadUrl);
+
+    xhr.upload.onprogress = e => {
+      if (e.lengthComputable) {
+        progress[fileIdx] = e.loaded / e.total;
+        updateProgress(totalFiles);
+        setSt(fileIdx, Math.round(progress[fileIdx]*100)+'%');
+      }
+    };
+
+    xhr.onload = () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        progress[fileIdx] = 1;
+        updateProgress(totalFiles);
+        resolve();
+      } else {
+        reject(new Error('HTTP ' + xhr.status + ': ' + xhr.responseText));
+      }
+    };
+
+    xhr.onerror = () => reject(new Error('Сетевая ошибка'));
+    xhr.ontimeout = () => reject(new Error('Таймаут'));
+    xhr.timeout = 0; // без таймаута для больших файлов
+
+    xhr.send(file);
+  });
+}
+
+// ── Загрузка ─────────────────────────────────────────────
+async function startUpload() {
+  if (uploading) return;
+  if (!files.length) { status('Сначала выберите файлы.','err'); return; }
+  if (YADISK_TOKEN === 'ВСТАВЬТЕ_ТОКЕН_СЮДА') {
+    status('Токен Яндекс.Диска не настроен. Обратитесь к организаторам.','err');
+    return;
+  }
+
+  uploading = true;
+  const btn  = document.getElementById('upBtn');
+  const prog = document.getElementById('prog');
+  const plbl = document.getElementById('plbl');
+  btn.disabled = true;
+  prog.style.display = 'block';
+  status('Создание папки…','ld');
+
+  // Создаём структуру папок: ROOT_DIR / ИмяГостя
+  const guest     = guestName || 'Гость';
+  const guestDir  = ROOT_DIR + '/' + guest;
+
+  try {
+    await mkDir(ROOT_DIR);
+    await mkDir(guestDir);
+  } catch(e) {
+    status('Ошибка создания папки: '+e.message,'err');
+    btn.disabled=false; uploading=false; return;
+  }
+
+  const total  = files.length;
+  const errors = [];
+  let done = 0;
+
+  files.forEach((_,i) => progress[i] = 0);
+  status('Загрузка '+total+' файлов…','ld');
+  plbl.textContent = 'Загрузка…';
+
+  // Фото — параллельно, видео — последовательно
+  const photoQueue = files.map((f,i) => ({f,i})).filter(x => !x.f.type.startsWith('video/'));
+  const videoQueue = files.map((f,i) => ({f,i})).filter(x =>  x.f.type.startsWith('video/'));
+
+  // Параллельная загрузка фото
+  const photoWorkers = Array.from({ length: Math.min(PARALLEL, photoQueue.length || 1) }, async () => {
+    while (photoQueue.length) {
+      const {f,i} = photoQueue.shift();
+      setSt(i,'…');
+      try {
+        const ydPath = guestDir + '/' + f.name;
+        await uploadToYandex(f, ydPath, i, total);
+        setSt(i,'✓'); done++;
+      } catch(e) {
+        setSt(i,'✗'); errors.push(f.name+': '+e.message);
+        console.error(f.name, e);
+      }
+    }
+  });
+  await Promise.all(photoWorkers);
+
+  // Последовательная загрузка видео
+  for (const {f,i} of videoQueue) {
+    setSt(i,'…');
+    try {
+      const ydPath = guestDir + '/' + f.name;
+      await uploadToYandex(f, ydPath, i, total);
+      setSt(i,'✓'); done++;
+    } catch(e) {
+      setSt(i,'✗'); errors.push(f.name+': '+e.message);
+      console.error(f.name, e);
+    }
+  }
+
+  document.getElementById('pbar').style.width = '100%';
+  plbl.textContent = 'Загружено '+done+' из '+total;
+
+  if (errors.length === 0) {
+    status('✓ Загружено '+total+' файлов. Спасибо! Ваши фото сохранены в альбом 🌿','ok');
+  } else {
+    status('Загружено '+done+' из '+total+'. Ошибки: '+errors.join('; '),'err');
+  }
+
+  files=[]; render();
+  btn.disabled=false;
+  uploading=false;
+}
+</script>
+</body>
+</html>
