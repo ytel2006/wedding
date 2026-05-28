@@ -159,7 +159,7 @@ body::after{content:'';position:fixed;bottom:-20px;right:-40px;width:280px;heigh
 // ╔══════════════════════════════════════════════════════════╗
 // ║  ВСТАВЬТЕ СВОЙ ТОКЕН СЮДА (получить на oauth.yandex.ru) ║
 // ╚══════════════════════════════════════════════════════════╝
-const YADISK_TOKEN = 'y0__wgBELef3GwY481CIMrS6NgXMLrgkN0Hi87Wm_aQieIeU2cNaQnqlXpmaCE';
+const YADISK_TOKEN = 'ВСТАВЬТЕ_ТОКЕН_СЮДА';
 
 // Корневая папка на Яндекс.Диске (будет создана автоматически)
 const ROOT_DIR = 'disk:/Свадьба Олеси и Толи';
@@ -337,14 +337,11 @@ async function startUpload() {
   status('Загрузка '+total+' файлов…','ld');
   plbl.textContent = 'Загрузка…';
 
-  // Фото — параллельно, видео — последовательно
-  const photoQueue = files.map((f,i) => ({f,i})).filter(x => !x.f.type.startsWith('video/'));
-  const videoQueue = files.map((f,i) => ({f,i})).filter(x =>  x.f.type.startsWith('video/'));
-
-  // Параллельная загрузка фото
-  const photoWorkers = Array.from({ length: Math.min(PARALLEL, photoQueue.length || 1) }, async () => {
-    while (photoQueue.length) {
-      const {f,i} = photoQueue.shift();
+  // Все файлы — параллельно PARALLEL штук одновременно
+  const queue = files.map((f,i) => ({f,i}));
+  const workers = Array.from({ length: Math.min(PARALLEL, queue.length) }, async () => {
+    while (queue.length) {
+      const {f,i} = queue.shift();
       setSt(i,'…');
       try {
         const ydPath = guestDir + '/' + f.name;
@@ -356,20 +353,7 @@ async function startUpload() {
       }
     }
   });
-  await Promise.all(photoWorkers);
-
-  // Последовательная загрузка видео
-  for (const {f,i} of videoQueue) {
-    setSt(i,'…');
-    try {
-      const ydPath = guestDir + '/' + f.name;
-      await uploadToYandex(f, ydPath, i, total);
-      setSt(i,'✓'); done++;
-    } catch(e) {
-      setSt(i,'✗'); errors.push(f.name+': '+e.message);
-      console.error(f.name, e);
-    }
-  }
+  await Promise.all(workers);
 
   document.getElementById('pbar').style.width = '100%';
   plbl.textContent = 'Загружено '+done+' из '+total;
